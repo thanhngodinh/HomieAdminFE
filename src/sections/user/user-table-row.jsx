@@ -20,8 +20,8 @@ export default function UserTableRow({
   selected,
   name,
   avatarUrl,
-  company,
-  role,
+  phone,
+  email,
   isVerified,
   status,
   handleClick,
@@ -51,10 +51,9 @@ export default function UserTableRow({
             </Typography>
           </Stack>
         </TableCell>
+        <TableCell>{email}</TableCell>
 
-        <TableCell>{company}</TableCell>
-
-        <TableCell>{role}</TableCell>
+        <TableCell>{phone}</TableCell>
 
         <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
 

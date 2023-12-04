@@ -11,10 +11,20 @@ import Iconify from 'src/components/iconify';
 import PostCard from '../post-card';
 import PostSort from '../post-sort';
 import PostSearch from '../post-search';
+import { useEffect, useState } from 'react';
+import postApi from 'src/api/postApi';
 
 // ----------------------------------------------------------------------
 
 export default function BlogView() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const resPost = await postApi.searchPost();
+      setPosts(resPost.data);
+    })();
+  }, []);
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

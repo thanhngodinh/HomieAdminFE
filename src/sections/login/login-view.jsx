@@ -17,28 +17,47 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import account from 'src/api/accountApi';
+import { setToken } from 'src/utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
   const theme = useTheme();
 
-  const router = useRouter();
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
-    router.push('/admin/dashboard');
+  const handleClick = async () => {
+    const resLogin = await account.login({ username: userName, password: password });
+    console.log(resLogin.data);
+    if (resLogin.data.token) {
+      setToken(resLogin.data.token);
+      navigate('/dashboard');
+    }
+    // if(resLogin.data.)
+    // router.push('/admin/dashboard');
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          name="email"
+          label="Email address"
+        />
 
         <TextField
           name="password"
           label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -97,7 +116,9 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography sx={{ mt: 2, mb: 5 }} variant="h4">Sign in to Homie</Typography>
+          <Typography sx={{ mt: 2, mb: 5 }} variant="h4">
+            Sign in to Homie
+          </Typography>
 
           {/* <Stack direction="row" spacing={2}>
             <Button

@@ -18,16 +18,14 @@ import SvgColor from 'src/components/svg-color';
 // ----------------------------------------------------------------------
 
 export default function PostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
-
   const latestPostLarge = index === 0;
 
   const latestPost = index === 1 || index === 2;
 
   const renderAvatar = (
     <Avatar
-      alt={author.name}
-      src={author.avatarUrl}
+      alt={post?.authorName}
+      src={post?.authorAvatar}
       sx={{
         zIndex: 9,
         width: 32,
@@ -63,48 +61,48 @@ export default function PostCard({ post, index }) {
         }),
       }}
     >
-      {title}
+      {post?.name}
     </Link>
   );
 
-  const renderInfo = (
-    <Stack
-      direction="row"
-      flexWrap="wrap"
-      spacing={1.5}
-      justifyContent="flex-end"
-      sx={{
-        mt: 3,
-        color: 'text.disabled',
-      }}
-    >
-      {[
-        { number: comment, icon: 'eva:message-circle-fill' },
-        { number: view, icon: 'eva:eye-fill' },
-        { number: share, icon: 'eva:share-fill' },
-      ].map((info, _index) => (
-        <Stack
-          key={_index}
-          direction="row"
-          sx={{
-            ...((latestPostLarge || latestPost) && {
-              opacity: 0.48,
-              color: 'common.white',
-            }),
-          }}
-        >
-          <Iconify width={16} icon={info.icon} sx={{ mr: 0.5 }} />
-          <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-        </Stack>
-      ))}
-    </Stack>
-  );
+  // const renderInfo = (
+  //   <Stack
+  //     direction="row"
+  //     flexWrap="wrap"
+  //     spacing={1.5}
+  //     justifyContent="flex-end"
+  //     sx={{
+  //       mt: 3,
+  //       color: 'text.disabled',
+  //     }}
+  //   >
+  //     {[
+  //       { number: comment, icon: 'eva:message-circle-fill' },
+  //       { number: view, icon: 'eva:eye-fill' },
+  //       { number: share, icon: 'eva:share-fill' },
+  //     ].map((info, _index) => (
+  //       <Stack
+  //         key={_index}
+  //         direction="row"
+  //         sx={{
+  //           ...((latestPostLarge || latestPost) && {
+  //             opacity: 0.48,
+  //             color: 'common.white',
+  //           }),
+  //         }}
+  //       >
+  //         <Iconify width={16} icon={info.icon} sx={{ mr: 0.5 }} />
+  //         <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+  //       </Stack>
+  //     ))}
+  //   </Stack>
+  // );
 
   const renderCover = (
     <Box
       component="img"
-      alt={title}
-      src={cover}
+      alt={post?.name}
+      src={post?.imageUrl[0]}
       sx={{
         top: 0,
         width: 1,
@@ -128,7 +126,7 @@ export default function PostCard({ post, index }) {
         }),
       }}
     >
-      {fDate(createdAt)}
+      {fDate(post?.createdAt)}
     </Typography>
   );
 
@@ -195,7 +193,7 @@ export default function PostCard({ post, index }) {
 
           {renderTitle}
 
-          {renderInfo}
+          {/* {renderInfo} */}
         </Box>
       </Card>
     </Grid>
