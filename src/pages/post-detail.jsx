@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { BlogView } from 'src/sections/blog/view';
+import { PostDetailView } from 'src/sections/post-detail/view';
 
 // ----------------------------------------------------------------------
 
-export default function BlogPage() {
+export default function PostDetailPage() {
   return (
     <>
       <Helmet>
         <title> Post | HomieAdmin</title>
       </Helmet>
 
-      <BlogView />
+      <PostDetailView />
     </>
   );
 }

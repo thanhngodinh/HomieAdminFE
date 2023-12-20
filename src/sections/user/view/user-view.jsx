@@ -27,17 +27,11 @@ import userApi from 'src/api/userApi';
 
 export default function UserPage() {
   const [users, setUsers] = useState([]);
-
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('asc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
   const [filterName, setFilterName] = useState('');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useLayoutEffect(() => {
@@ -110,9 +104,9 @@ export default function UserPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        {/* <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
-        </Button>
+        </Button> */}
       </Stack>
 
       <Card>
@@ -147,12 +141,13 @@ export default function UserPage() {
                   .map((row) => (
                     <UserTableRow
                       key={row.id}
+                      id={row.id}
                       name={row.name}
                       email={row.email}
                       status={row.status === 'A' ? 'Active' : 'Inactive'}
                       phone={row.phone}
                       avatarUrl={row.avatar}
-                      isVerified={row.isVerifiedPhone}
+                      isVerifiedPhone={row.isVerifiedPhone}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />

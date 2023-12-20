@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-
+import userApi from 'src/api/userApi';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
@@ -18,11 +18,12 @@ import Iconify from 'src/components/iconify';
 
 export default function UserTableRow({
   selected,
+  id,
   name,
   avatarUrl,
   phone,
   email,
-  isVerified,
+  isVerifiedPhone,
   status,
   handleClick,
 }) {
@@ -33,6 +34,30 @@ export default function UserTableRow({
   };
 
   const handleCloseMenu = () => {
+    setOpen(null);
+  };
+
+  const handleResetPassword = async () => {
+    const res = await userApi.resetPassword(id);
+    if (res.status == 'success') {
+      window.location.reload();
+    }
+    setOpen(null);
+  };
+
+  const handleActiveUser = async () => {
+    const res = await userApi.activeUser(id);
+    if (res.status == 'success') {
+      window.location.reload();
+    }
+    setOpen(null);
+  };
+
+  const handleDisableUser = async () => {
+    const res = await userApi.disableUser(id);
+    if (res.status == 'success') {
+      window.location.reload();
+    }
     setOpen(null);
   };
 
@@ -55,7 +80,7 @@ export default function UserTableRow({
 
         <TableCell>{phone}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        <TableCell align="center">{isVerifiedPhone ? 'Yes' : 'No'}</TableCell>
 
         <TableCell>
           <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
@@ -78,14 +103,16 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleResetPassword}>Reset Password</MenuItem>
+
+        <MenuItem onClick={handleActiveUser}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
-          Edit
+          Active
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDisableUser} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
-          Delete
+          Inactive
         </MenuItem>
       </Popover>
     </>
@@ -96,7 +123,7 @@ UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
   company: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
+  isVerifiedPhone: PropTypes.any,
   name: PropTypes.any,
   role: PropTypes.any,
   selected: PropTypes.any,

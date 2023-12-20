@@ -18,9 +18,9 @@ import SvgColor from 'src/components/svg-color';
 // ----------------------------------------------------------------------
 
 export default function PostCard({ post, index }) {
-  const latestPostLarge = index === 0;
+  const latestPostLarge = false;
 
-  const latestPost = index === 1 || index === 2;
+  const latestPost = false;
 
   const renderAvatar = (
     <Avatar
@@ -49,6 +49,7 @@ export default function PostCard({ post, index }) {
       color="inherit"
       variant="subtitle2"
       underline="hover"
+      href={`/post/` + post.id}
       sx={{
         height: 44,
         overflow: 'hidden',
